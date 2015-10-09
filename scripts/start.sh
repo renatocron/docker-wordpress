@@ -1,6 +1,14 @@
 #!/bin/bash
 if [ ! -f /var/www/wp-config.php ]; then
+
+# sed "s/datadir  = \/var\/lib\/mysql/datadir = /data\/mysql/" /etc/mysql/my.cnf > /etc/mysql/my.cnf
+
+#chown -R mysql:mysql /data/mysql
+
+cp -dpr /wordpress/* /var/www
+chown -R www-data:www-data /var/www/
 #mysql has to be started this way as it doesn't work to call from /etc/init.d
+
 /usr/bin/mysqld_safe & 
 sleep 10s
 # Here we generate random passwords (thank you pwgen!). The first two are for mysql users, the last batch for random keys in wp-config.php
@@ -15,6 +23,7 @@ echo $WORDPRESS_PASSWORD > /wordpress-db-pw.txt
 #there used to be a huge ugly line of sed and cat and pipe and stuff below,
 #but thanks to @djfiander's thing at https://gist.github.com/djfiander/6141138
 #there isn't now.
+
 
 sed -e "s/database_name_here/$WORDPRESS_DB/
 s/username_here/$WORDPRESS_DB/

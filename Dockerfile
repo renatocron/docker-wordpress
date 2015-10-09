@@ -11,7 +11,7 @@ ADD ./configs/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN rm -rf /var/www/
 ADD https://wordpress.org/latest.tar.gz /wordpress.tar.gz
 RUN tar xvzf /wordpress.tar.gz 
-RUN mv /wordpress /var/www/
+RUN cp -dpr /wordpress /var/www/
 RUN chown -R www-data:www-data /var/www/
 RUN chmod 755 /start.sh
 RUN chmod 755 /etc/apache2/foreground.sh
